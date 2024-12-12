@@ -13,24 +13,14 @@ function App() {
         "paragraph": "A closure is a function that retains access to its lexical scope, even when the function is executed outside that scope.",
         "timestamp": "1641081600"
       },
-      {
+      { 
         "heading": "Node.js Basics",
         "paragraph": "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. It's designed to build scalable network applications.",
         "timestamp": "1641168000"
-      },
-      {
-        "heading": "Exploring CSS Flexbox",
-        "paragraph": "CSS Flexbox is a layout model that allows items within a container to align and distribute space efficiently, even when their sizes are unknown or dynamic.",
-        "timestamp": "1641254400"
-      },
-      {
-        "heading": "Introduction to REST APIs",
-        "paragraph": "REST (Representational State Transfer) is an architectural style for designing networked applications, often used for building web services.",
-        "timestamp": "1641340800"
-      }
-        
+      },        
   ]);
   const [note,setNote] = useState({
+    id:"",
     heading :"",
     paragraph:"",
     timestamp:"",
