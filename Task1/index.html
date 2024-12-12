@@ -8,12 +8,33 @@
   <script type="text/javascript" src="https://unpkg.com/babel-standalone@6/babel.js"></script>
 
   <script type="text/babel">
-    function Greetings() {
-      return <h1>Hello readers, Thankyou for reading this blog !</h1>;
+    function Table() {
+      const data = ["onboarding call","Google Search Console Access","Website Access", "Technical Audit", "Anchor Tag and Semantic Analysis", "Website Access", "Competitor Analysis","Anchor Text /Url Mapping"
+      ];
+      // const [values, setValues] = useState({});
+      return (
+        <table>
+          <th><td>Month1</td></th>
+          {data.map((item,index) =>(
+            <tr>
+            <td>{item}</td>
+            <input type="text"/>
+            <td>{<input/>}</td>
+            <td>{<input/>}</td>
+            <td>{<input/>}</td>
+            <td>{<input/>}</td>
+            <td>{<input/>}</td>
+            <td>{<input/>}</td>
+          </tr>
+          
+          ))}
+        </table>
+
+      );
     }
 
     ReactDOM.render(
-      <Greetings />,
+      <Table />,
       document.getElementById("root")
     );
   </script>
