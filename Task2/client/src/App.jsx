@@ -5,6 +5,7 @@ import './App.css';
 
 function App() {
   const [notes, setNotes] = useState([]);
+  const api_endpoint = import.meta.env.VITE_API_URL;
   const [note, setNote] = useState({
     Heading: "",
     content: "",
@@ -12,7 +13,7 @@ function App() {
   });
 
   const getTasks = () => {
-    axios.get('http://localhost:3000/tasks')  
+    axios.get(`${api_endpoint}/tasks`)  
       .then((response) => {
         setNotes(response.data); 
       })
@@ -25,7 +26,7 @@ function App() {
     e.preventDefault();
     const newNote = { ...note, timestamp: new Date().toISOString() };
 
-    axios.post('http://localhost:3000/tasks', newNote)  
+    axios.post(`${api_endpoint}/tasks`, newNote)  
       .then((response) => {
         setNotes((prevData) => [newNote, ...prevData]);
         setNote({Heading: "",
@@ -39,7 +40,7 @@ function App() {
   };
 
   const deleteTask = (id) => {
-    axios.delete(`http://localhost:3000/tasks/${id}`)
+    axios.delete(`${api_endpoint}/tasks/${id}`)
       .then((response) => {
         setNotes(notes.filter(task => task.Id !== id));
         console.log(response.data.message);
