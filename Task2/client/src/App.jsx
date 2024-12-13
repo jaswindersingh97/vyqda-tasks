@@ -41,7 +41,7 @@ function App() {
   const deleteTask = (id) => {
     axios.delete(`http://localhost:3000/tasks/${id}`)
       .then((response) => {
-        setNotes(notes.filter(task => task.id !== id));
+        setNotes(notes.filter(task => task.Id !== id));
         console.log(response.data.message);
       })
       .catch((error) => {
