@@ -3,44 +3,99 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task1</title>
   <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
   <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-  <script type="text/javascript" src="https://unpkg.com/babel-standalone@6/babel.js"></script>
-
-  <script type="text/babel">
-    function Table() {
-      const data = ["onboarding call","Google Search Console Access","Website Access", "Technical Audit", "Anchor Tag and Semantic Analysis", "Website Access", "Competitor Analysis","Anchor Text /Url Mapping"
-      ];
-      // const [values, setValues] = useState({});
-      return (
-        <table>
-          <th><td>Month1</td></th>
-          {data.map((item,index) =>(
-            <tr>
-            <td>{item}</td>
-            <input type="text"/>
-            <td>{<input/>}</td>
-            <td>{<input/>}</td>
-            <td>{<input/>}</td>
-            <td>{<input/>}</td>
-            <td>{<input/>}</td>
-            <td>{<input/>}</td>
-          </tr>
-          
-          ))}
-        </table>
-
-      );
+  <script src="https://unpkg.com/babel-standalone@6/babel.js"></script>
+  <style>
+    body{
+      margin: 0px;
     }
-
-    ReactDOM.render(
-      <Table />,
-      document.getElementById("root")
-    );
-  </script>
-  <title>Document</title>
+    .container{
+      display: flex;
+      margin: 0px;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      background-color: black;
+    }
+    .cell {
+      background-color: white;
+      padding: 10px;
+      border: 1px solid #ddd;
+      outline: none;
+    }
+    .cell:focus {
+      border-color: blue;
+    }
+  </style>
 </head>
 <body>
   <div id="root"></div>
+
+  <script type="text/babel">
+    const { useState } = React;
+
+    function Grid() {
+      const initialRows = 20;
+      const initialCols = 10;
+    
+      const [gridData, setGridData] = useState(
+        Array.from({ length: initialRows }, () => Array(initialCols).fill(""))
+      );
+      const [debounceTimeout, setDebounceTimeout] = useState(null);
+    
+      const mockApiCall = (rowIndex, colIndex, value) => {
+        console.log(`Updated cell at row ${rowIndex}, column ${colIndex} with value: ${value}`);
+      };
+    
+      const handleCellChange = (rowIndex, colIndex, value) => {
+        const updatedGrid = [...gridData];
+        updatedGrid[rowIndex][colIndex] = value;
+        setGridData(updatedGrid);
+      
+        // Clear the previous timeout
+        if (debounceTimeout) {
+          clearTimeout(debounceTimeout);
+        }
+      
+        // Set a new timeout to simulate debouncing
+        const newTimeout = setTimeout(() => {
+          mockApiCall(rowIndex, colIndex, value);
+        }, 300); // Adjust debounce delay as needed
+      
+        setDebounceTimeout(newTimeout);
+      };
+    
+      return (
+        <div className="container">
+          <div className="grid">
+            {gridData.map((row, rowIndex) =>
+              row.map((cell, colIndex) => (
+                <input
+                  key={`${rowIndex}-${colIndex}`}
+                  className="cell"
+                  value={cell}
+                  onChange={(e) => handleCellChange(rowIndex, colIndex, e.target.value)}
+                />
+              ))
+            )}
+          </div>
+        </div>
+      );
+    }
+
+    function App() {
+      return (
+        <div>
+          <Grid />
+        </div>
+      );
+    }
+
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    root.render(<App />);
+  </script>
 </body>
 </html>

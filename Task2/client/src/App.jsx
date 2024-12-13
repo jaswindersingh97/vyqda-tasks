@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import Task from './component/Task/Task'
-
+import './App.css';
 function App() {
   const [notes,setNotes] = useState([
       {
@@ -20,7 +20,6 @@ function App() {
       },        
   ]);
   const [note,setNote] = useState({
-    id:"",
     heading :"",
     paragraph:"",
     timestamp:"",
@@ -28,7 +27,7 @@ function App() {
   const onsubmit = (e) =>{
     e.preventDefault();
     setNote((note)=>({...note , timestamp:Date.now()}));
-    setNotes((prevdata)=>([...prevdata,note]));
+    setNotes((prevdata)=>([note,...prevdata]));
     setNote({
       heading :"",
       paragraph:"",
@@ -36,10 +35,9 @@ function App() {
     })
   }
   return (
-    <div>
+    <div className='container'>
       <div className='heading'>
-        <span>three lines</span>
-        <span>Notes</span>
+        <span> ≡ Notes</span>
       </div>
       <div className='body'>
         <div className='upper'>
@@ -53,7 +51,6 @@ function App() {
         {notes.map((item) =>(
           <Task data={item} key={item.timestamp}/>
         ))}
-          {/* <Task data={}/> */}
         </div>
       </div>
       
