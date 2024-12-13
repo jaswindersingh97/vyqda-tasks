@@ -54,17 +54,12 @@
         const updatedGrid = [...gridData];
         updatedGrid[rowIndex][colIndex] = value;
         setGridData(updatedGrid);
-      
-        // Clear the previous timeout
         if (debounceTimeout) {
           clearTimeout(debounceTimeout);
         }
-      
-        // Set a new timeout to simulate debouncing
         const newTimeout = setTimeout(() => {
           mockApiCall(rowIndex, colIndex, value);
-        }, 300); // Adjust debounce delay as needed
-      
+        }, 300); 
         setDebounceTimeout(newTimeout);
       };
     
