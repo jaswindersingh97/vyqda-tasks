@@ -1,39 +1,60 @@
-import React, { useState } from 'react'
-import Task from './component/Task/Task'
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import Task from './component/Task/Task';
 import './App.css';
+
 function App() {
-  const [notes,setNotes] = useState([
-      {
-        "heading": "Introduction to React",
-        "paragraph": "React is a JavaScript library for building user interfaces. It allows developers to create reusable UI components.",
-        "timestamp": "1640995200"
-      },
-      {
-        "heading": "Understanding JavaScript Closures",
-        "paragraph": "A closure is a function that retains access to its lexical scope, even when the function is executed outside that scope.",
-        "timestamp": "1641081600"
-      },
-      { 
-        "heading": "Node.js Basics",
-        "paragraph": "Node.js is a JavaScript runtime built on Chrome's V8 JavaScript engine. It's designed to build scalable network applications.",
-        "timestamp": "1641168000"
-      },        
-  ]);
-  const [note,setNote] = useState({
-    heading :"",
-    paragraph:"",
-    timestamp:"",
-  })
-  const onsubmit = (e) =>{
+  const [notes, setNotes] = useState([]);
+  const [note, setNote] = useState({
+    Heading: "",
+    content: "",
+    timestamp: "",
+  });
+
+  const getTasks = () => {
+    axios.get('http://localhost:3000/tasks')  
+      .then((response) => {
+        setNotes(response.data); 
+      })
+      .catch((error) => {
+        console.error('There was an error fetching tasks!', error);
+      });
+  };
+
+  const onsubmit = (e) => {
     e.preventDefault();
-    setNote((note)=>({...note , timestamp:Date.now()}));
-    setNotes((prevdata)=>([note,...prevdata]));
-    setNote({
-      heading :"",
-      paragraph:"",
-      timestamp:"",  
-    })
-  }
+    const newNote = { ...note, timestamp: new Date().toISOString() };
+
+    axios.post('http://localhost:3000/tasks', newNote)  
+      .then((response) => {
+        setNotes((prevData) => [newNote, ...prevData]);
+        setNote({Heading: "",
+          content: "",
+          timestamp: "",
+        });
+      })
+      .catch((error) => {
+        console.error('Error creating task:', error);
+      });
+  };
+
+  const deleteTask = (id) => {
+    axios.delete(`http://localhost:3000/tasks/${id}`)
+      .then((response) => {
+        setNotes(notes.filter(task => task.id !== id));
+        console.log(response.data.message);
+      })
+      .catch((error) => {
+        console.error('Error deleting task:', error);
+      });
+  };
+
+
+  useEffect(() => {
+    getTasks();
+    console.log(notes);
+  }, []);
+
   return (
     <div className='container'>
       <div className='heading'>
@@ -42,20 +63,29 @@ function App() {
       <div className='body'>
         <div className='upper'>
           <form onSubmit={onsubmit}>
-          <input type='text' placeholder='Take a note...' value={note.heading} onChange={(e)=>setNote((note)=>({...note, heading:e.target.value}))}/>
-          <input type='text' placeholder='enter the content' value={note.paragraph} onChange={(e)=>setNote((note)=>({...note, paragraph:e.target.value}))}/ >
-          <button type='submit'/>
+            <input
+              type='text'
+              placeholder='Take a note...'
+              value={note.Heading}
+              onChange={(e) => setNote((note) => ({ ...note, Heading: e.target.value }))}
+            />
+            <input
+              type='text'
+              placeholder='Enter the content'
+              value={note.content}
+              onChange={(e) => setNote((note) => ({ ...note, content: e.target.value }))}
+            />
+            <button type='submit'>Add Note</button>
           </form>
         </div>
         <div className='lower'>
-        {notes.map((item) =>(
-          <Task data={item} key={item.timestamp}/>
-        ))}
+          {notes.map((item) => (
+            <Task data={item} key={item.timestamp} /> 
+          ))}
         </div>
       </div>
-      
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
