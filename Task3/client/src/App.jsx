@@ -22,9 +22,12 @@ function App() {
       <input type="text"  placeholder='enter the number' value={phoneNo} onChange={(e)=>setPhoneNo(e.target.value)}/>
       <button type='submit'>submit</button>      
     </form>
+    {output.data && <>
     <p>data:{output.data}</p>
       <h1>Headers:{output.Headers}
     </h1>
+    </>}
+    
     </>
 
   )
