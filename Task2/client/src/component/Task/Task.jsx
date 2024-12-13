@@ -6,7 +6,6 @@ function Task({data}) {
       <h1>{data.Heading}</h1>
       <p>{data.content}</p>
       <span>{data.timestamp}</span>
-      <button>Delete</button>
     </div>
   )
 }

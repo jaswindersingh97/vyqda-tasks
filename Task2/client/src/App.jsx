@@ -80,7 +80,10 @@ function App() {
         </div>
         <div className='lower'>
           {notes.map((item) => (
-            <Task data={item} key={item.timestamp} /> 
+            <div key={item.Id}> 
+              <Task data={item} />
+              <button onClick={() => deleteTask(item.Id)}>Delete</button>  
+            </div>
           ))}
         </div>
       </div>
