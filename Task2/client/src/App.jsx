@@ -81,10 +81,10 @@ function App() {
         </div>
         <div className='lower'>
           {notes.map((item) => (
-            <div key={item.Id}> 
+            <span className='item' key={item.Id}> 
               <Task data={item} />
               <button onClick={() => deleteTask(item.Id)}>Delete</button>  
-            </div>
+            </span>
           ))}
         </div>
       </div>

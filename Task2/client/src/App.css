@@ -1,18 +1,57 @@
 .container{
   width: 100vw;
-  height: 100%;
+  height: 100vh;
   background-color: skyblue;
   display: flex;
   flex-direction: column;
   box-sizing: border-box;
+  gap: 20px;
 }
-
 .heading{
   width: 100vw;
   background-color: black;
   height: 40px;
-}
-.heading span{
-  font-size: larger;
+  font-size: xx-large;
   color: white;
+
+}
+.body{
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  overflow-y: auto;
+}
+.upper{
+  align-self: center;
+}
+.upper form{
+  display: flex;
+  gap: 20px;
+}
+.upper input{
+  padding: 20px;
+}
+.upper button{
+  padding: 20px;
+  border-radius: 30px ;
+}
+.lower{
+  padding: 10px;
+  display: flex;
+  gap: 10px;
+  overflow-x:none;
+  flex-wrap: wrap;
+}
+.item{
+  width: 350px;
+  background-color: rgb(235, 215, 215);
+  display: flex;
+  flex-direction: column;
+  padding: 10px;
+  gap: 20px;
+}
+.item button{
+
+  width: 60px;
 }
