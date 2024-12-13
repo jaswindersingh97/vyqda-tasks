@@ -40,10 +40,27 @@
     function Grid() {
       const initialRows = 20;
       const initialCols = 10;
-    
-      const [gridData, setGridData] = useState(
-        Array.from({ length: initialRows }, () => Array(initialCols).fill(""))
-      );
+
+const prefilledData = [
+  [
+    "MONTH 1", 
+    "Onboarding Call", 
+    "Google Search Console Access", 
+    "Google Analytics Access", 
+    "Website Access", 
+    "Technical Audit", 
+    "Anchor Text and Semantic Analysis", 
+    "Competitor Analysis", 
+    "Anchor Text/URL Mapping", 
+    "Google Data Studio Report + Local Reporting Suite"
+  ],
+  ...Array.from({ length: initialRows - 1 }, () => Array(initialCols).fill("")) // Empty rows
+];
+
+const [gridData, setGridData] = useState(prefilledData);      
+      // const [gridData, setGridData] = useState(
+      //   Array.from({ length: initialRows }, () => Array(initialCols).fill(""))
+      // );
       const [debounceTimeout, setDebounceTimeout] = useState(null);
     
       const mockApiCall = (rowIndex, colIndex, value) => {
